@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package tutorial;
+
+message MySvcMessage {
+    oneof types {
+        TestRequest  testRequest  = 1;    
+        TestResponse testResponse = 2;    
+    }
+}   
+
+message TestRequest {
+  required string msg = 1; 
+}
+
+message TestResponse {
+  required string msg = 1;
+}
