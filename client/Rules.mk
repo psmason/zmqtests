@@ -4,7 +4,8 @@ dirstack_$(sp)	:= $(d)
 d				:= $(dir)
 
 # Local variables
-OBJS_$(d)	:= $(d)/main.m.o 
+OBJS_$(d)	:= 	$(d)/main.m.o \
+				messages/mysvcmessages.pb.o \
 
 CLEAN 	    := $(CLEAN) $(OBJS_$(d)) $(d)/client.tsk
 

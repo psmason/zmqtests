@@ -30,8 +30,17 @@ int main()
   const int byteSize = message.ByteSize();
   assert(message.SerializeToArray(&buffer, byteSize));
 
-  zmq_send(requester, buffer, byteSize, 0);
-  zmq_send(requester, buffer, BUFFER_SIZE, 0);
+  zmq_send(requester, buffer, byteSize,    0);
+  const int bytesRead = zmq_recv(requester, buffer, BUFFER_SIZE, 0);
+
+  Message response;
+  response.ParseFromArray(&buffer, bytesRead);
+
+  std::cout << "response: " << response.DebugString() << std::endl;
+  std::cout << "oneof info: " 
+            << " is response? " << (Message::kTestResponse == response.types_case())
+            << " is request? " << (Message::kTestRequest == response.types_case())
+            << std::endl;
   
   zmq_close(requester);
   zmq_ctx_destroy(context); 
